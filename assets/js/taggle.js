@@ -583,6 +583,18 @@
             return self;
         };
 
+        self.clear = function() {
+            var i = tag.values.length - 1;
+
+            while (i >= 0) {
+                _remove(tag.elements[i]);
+
+                i--;
+            }
+
+            return self;
+        };
+
         // Bang bang bang skeet skeet
         _init();
     };
