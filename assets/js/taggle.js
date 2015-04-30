@@ -90,6 +90,7 @@
     BACKSPACE = 8,
     COMMA = 188,
     TAB = 9,
+    SPACE = 32,
     ENTER = 13;
 
     /**
@@ -125,7 +126,7 @@
         }
 
         if (!settings.submitKeys.length) {
-            settings.submitKeys = [COMMA, TAB, ENTER];
+            settings.submitKeys = [COMMA, TAB, ENTER, SPACE];
         }
 
         if (typeof el === 'string') {
@@ -403,7 +404,7 @@
 
             _listenForEndOfContainer();
 
-            if (_isConfirmKey(key) && input.value !== '') {
+            if (_isConfirmKey(key) && (key === SPACE || input.value !== '')) {
                 _confirmValidTagEvent(e);
                 return;
             }
