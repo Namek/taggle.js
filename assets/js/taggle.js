@@ -73,6 +73,12 @@
         submitKeys:             [],
 
         /**
+         * Submit tag when input loses focus?
+         * @type {Boolean}
+         */
+        submitOnBlur:           true,
+
+        /**
          * Function hook called when a tag is added
          * @param  {Event} event Event triggered when tag was added
          * @param  {String} tag The tag added
@@ -381,6 +387,10 @@
          * Sets state of container when blurred
          */
         function _blurInput() {
+            if (settings.submitOnBlur) {
+                _add(null, input.value);
+            }
+
             input.value = '';
             _setInputWidth();
 
