@@ -182,6 +182,7 @@
 
             if (placeholder) {
                 placeholder.style.opacity = 0;
+                placeholder.style['pointer-events'] = 'none';
                 placeholder.classList.add('taggle_placeholder');
                 container.appendChild(placeholder);
                 _setText(placeholder, settings.placeholder);
@@ -207,8 +208,27 @@
                 input.focus();
             });
 
-            input.onfocus = _focusInput;
-            input.onblur = _blurInput;
+            var isFocused = false;
+
+            input.onfocus = function() {
+                isFocused = true;
+                _focusInput();
+            };
+            input.onblur = function() {
+                isFocused = false;
+                _blurInput();
+            };
+
+            _on(container, 'mouseover', function() {
+                if (!isFocused) {
+                    _focusInput();
+                }
+            });
+            _on(container, 'mouseout', function() {
+                if (!isFocused) {
+                    _loseFocus();
+                }
+            });
 
             _on(input, 'keydown', _keydownEvents);
             _on(input, 'keyup', _keyupEvents);
@@ -392,6 +412,10 @@
             }
 
             input.value = '';
+            _loseFocus();
+        }
+
+        function _loseFocus() {
             _setInputWidth();
 
             if (container.classList.contains(settings.containerFocusClass)) {
